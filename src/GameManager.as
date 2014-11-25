@@ -11,6 +11,7 @@ package
 		
 		private static var _instance:GameManager;
 		private var _main:*;
+		private var _current_scene:String; // main_menu - game
 		
 		//Debug
 		private static var bg:Sprite;
@@ -35,8 +36,14 @@ package
 		public static function init():GameManager {
 			//Set Background Color
 			Misc.changeStageColor(000000); // -> Black
+			_instance._current_scene = "game";
 			
 			return _instance;
+		}
+		
+		// GameManager.getCurrentScene
+		public static function get getCurrentScene():String {
+			return _instance._current_scene;
 		}
 		
 	}

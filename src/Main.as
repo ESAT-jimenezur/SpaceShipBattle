@@ -1,10 +1,9 @@
-package 
-{
+package {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	/**
-	 * ...
+	 * 
 	 * @author Jose Luis Jimenez Urbano
 	 */
 	public class Main extends Sprite {
@@ -27,9 +26,14 @@ package
 		}
 		
 		private function mainLoop(e:Event):void {
-			// Input
-			// Update
-			Draw();
+			if (GameManager.getCurrentScene == "main_menu") {
+				
+			}else if (GameManager.getCurrentScene == "game") {
+				Input.inputGame();
+				Update.updateGame();
+				Draw.drawGame();
+			}
+			
 		}
 		
 		
