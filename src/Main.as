@@ -19,14 +19,21 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			Misc.setMain = this;
-			var game_manager:GameManager = new GameManager();
-
+			var game_manager:GameManager = new GameManager();	
 			
 			
-			
-			
-			
+			// Set up main loop
+			addEventListener(Event.ENTER_FRAME, mainLoop);
 		}
+		
+		private function mainLoop(e:Event):void {
+			// Input
+			// Update
+			Draw();
+		}
+		
+		
+		
 		
 	}
 	

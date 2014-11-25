@@ -21,7 +21,6 @@ package
 				throw new Error("There is already a GameManager... Now Use GetGameManager()");
 			} 
 			_instance = this;
-		
 			init();
 		}
 		
