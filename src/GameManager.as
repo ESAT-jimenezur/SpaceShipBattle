@@ -1,6 +1,7 @@
 package  
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	/**
 	 * @brief GameManager Singleton
 	 * @author Jose Luis Jimenez Urbano
@@ -12,6 +13,8 @@ package
 		private static var _instance:GameManager;
 		private var _main:*;
 		private var _current_scene:String; // main_menu - game
+		public static var mouse_pos_x = 0;
+		public static var mouse_pos_y = 0;
 		
 		//Debug
 		private static var bg:Sprite;
@@ -37,7 +40,6 @@ package
 			//Set Background Color
 			Misc.changeStageColor(000000); // -> Black
 			_instance._current_scene = "game";
-			
 			return _instance;
 		}
 		

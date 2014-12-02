@@ -6,7 +6,7 @@ package {
 		
 	 public final class Input {
 		 
-		 public static function inputGame():void {
+		 public function inputGame():void {
 			
 		}
 		 
