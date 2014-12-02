@@ -41,8 +41,12 @@ package{
 		}
 		
 		private function drawShip():void {
-			space_ship.x = 400;
-			space_ship.y = 300;
+			space_ship.x = GameManager.ship_pos_x;
+			space_ship.y = GameManager.ship_pos_y;
+			
+			var dir = Math.atan2(space_ship.y - GameManager.mouse_pos_y,space_ship.x - GameManager.mouse_pos_x);
+			space_ship.rotation = dir * 180 / Math.PI+180;
+			
 		}
 
 	}

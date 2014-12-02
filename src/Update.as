@@ -1,6 +1,7 @@
 package {
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	/**
 	 * 
@@ -21,6 +22,25 @@ package {
 		
 		public function addListeners():void {
 			Misc._stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			Misc._stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyBoardKeyDown);
 		}	 
-	}
+		
+		private function onKeyBoardKeyDown(e:KeyboardEvent):void {
+			switch(String.fromCharCode(e.charCode)) {
+				case 'w':
+					GameManager.ship_pos_y += 5;
+					break;
+				case 'a':
+					
+					break;
+				case 's':
+					
+					break;
+				case 'd':
+					break;
+			}
+			
+		}
+		}
+	
 }

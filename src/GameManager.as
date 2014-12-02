@@ -13,8 +13,10 @@ package
 		private static var _instance:GameManager;
 		private var _main:*;
 		private var _current_scene:String; // main_menu - game
-		public static var mouse_pos_x = 0;
-		public static var mouse_pos_y = 0;
+		public static var mouse_pos_x:Number = 0;
+		public static var mouse_pos_y:Number = 0;
+		public static var ship_pos_x:Number = 300;
+		public static var ship_pos_y:Number = 400;
 		
 		//Debug
 		private static var bg:Sprite;
