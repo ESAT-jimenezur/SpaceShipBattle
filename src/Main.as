@@ -1,6 +1,8 @@
 package {
+	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -9,11 +11,9 @@ package {
 	 * @author Jose Luis Jimenez Urbano
 	 */
 	public class Main extends Sprite {
-		
 		private var input:Input = new Input();
 		private var update:Update = new Update();
 		private var draw:Draw = new Draw();
-		
 		
 		public function Main():void {
 			if (stage) init();
@@ -29,14 +29,15 @@ package {
 			// Set up main loop
 			addEventListener(Event.ENTER_FRAME, mainLoop);
 			
-			
 			Misc.input = input;
 			Misc.update = update;
 			Misc.draw = draw;
 			
 			addChild(draw);
 			
+			update.init();
 			update.addListeners();
+			draw.init();
 		}
 		
 		private function mainLoop(e:Event):void {

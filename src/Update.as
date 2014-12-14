@@ -1,10 +1,13 @@
-package
-{
+package{	
+	
 	import flash.display.MovieClip;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.trace.Trace;
+	import flash.display.Graphics;
 	import Input;
 	
 	/**
@@ -12,29 +15,34 @@ package
 	 * @author Jose Luis Jimenez Urbano
 	 */
 	
-	public final class Update extends MovieClip
-	{
+	public final class Update extends MovieClip {
+
+		
 		//The maximum speed
 		private var _max:Number = 50;
 		
 		private var dx:Number = 0;
 		private var dy:Number = 0;
 		
-		public function updateGame():void
-		{
+		public function updateGame():void{
 		
 		}
 		
-		public function onMouseMove(e:MouseEvent):void
-		{
+		public function onMouseMove(e:MouseEvent):void{
 			GameManager.mouse_pos_x = e.stageX;
 			GameManager.mouse_pos_y = e.stageY;
 		}
 		
-		public function addListeners():void
-		{
+		public function init():void {
+
+			
+		}
+		
+		public function addListeners():void{
 			Misc._stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			//Misc._stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyBoardKeyDown);
+			Misc._stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler);
+			Misc._stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
 			Input.initialize(Misc._stage);
 			Misc._stage.addEventListener(Event.ENTER_FRAME, refresh);
 		}
@@ -78,10 +86,22 @@ package
 					dy = dy > -0.5 ? 0 : dy + 0.5;
 				}
 			}
+			
 			//After all that, apply these to the object
 			GameManager.ship_pos_x += dx;
 			GameManager.ship_pos_y += dy;
+			
 		}
+		
+
+		private function onMouseDownHandler(event:MouseEvent):void {
+			Misc.draw.createBullet();
+		}
+		
+		private function onMouseUpHandler(event:MouseEvent):void {
+
+		}
+		
 	}
 
 }
