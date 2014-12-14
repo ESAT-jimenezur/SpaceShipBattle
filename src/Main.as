@@ -43,7 +43,7 @@ package {
 			if (GameManager.getCurrentScene == "main_menu") {
 				
 			}else if (GameManager.getCurrentScene == "game") {
-				input.inputGame();
+				//input.inputGame();
 				update.updateGame();
 				draw.drawGame();
 			}
