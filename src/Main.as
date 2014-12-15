@@ -5,6 +5,7 @@ package {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	
 	
 	/**
@@ -30,24 +31,46 @@ package {
 			// Set up main loop
 			addEventListener(Event.ENTER_FRAME, mainLoop);
 			
+			Misc._stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyBoardKeyDown);
+			
 			Misc.input = input;
 			Misc.update = update;
 			Misc.draw = draw;
 			
 			addChild(draw);
 			
-			update.init();
-			update.addListeners();
-			draw.init();
+			
+		}
+		
+		private function onKeyBoardKeyDown(e:KeyboardEvent):void {
+			if (GameManager.getCurrentScene == "main_menu") {
+				if (e.keyCode == 32) {
+					GameManager.setCurrentScene = "game";
+					update.init();
+					update.addListeners();
+					draw.init();
+				}
+			}else if (GameManager.getCurrentScene == "score") {
+				if (e.keyCode == 32) {
+					GameManager.setCurrentScene = "game";
+					GameManager.score = 0;
+					GameManager.game_lost = false;
+					update.init();
+					update.addListeners();
+					draw.init();
+				}
+			}
 		}
 		
 		private function mainLoop(e:Event):void {
 			if (GameManager.getCurrentScene == "main_menu") {
-				
+				draw.drawMenu();
 			}else if (GameManager.getCurrentScene == "game") {
 				//input.inputGame();
 				update.updateGame();
 				draw.drawGame();
+			}else if (GameManager.getCurrentScene == "score") {
+				draw.drawScoreMenu();
 			}
 			
 		}

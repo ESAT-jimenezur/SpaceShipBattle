@@ -32,6 +32,8 @@ package {
 		private var enemy_ships:Array = [];
 		private var timer:Timer;
 		private var text:TextField = new TextField();
+		private var text2:TextField = new TextField();
+		private var text3:TextField = new TextField();
 		private var textFormat:TextFormat = new TextFormat();
 		
 		// settings
@@ -49,9 +51,7 @@ package {
 			drawHUD();
 		}
 		
-		private function drawHUD():void {
-			text.text = "Score " + GameManager.score.toString();
-		}
+		
 		
 		public function init():void {
 			generateStars();
@@ -68,16 +68,88 @@ package {
 			timer.start();
 			
 			
-			text.x = Misc.stageWidth / 4;
+			text.x = 50;
 			text.y = 10;
 			textFormat.size = 30;
+			textFormat.font = "audiowide";
 			text.defaultTextFormat = textFormat;
 			text.textColor = 0xFFFFFF;
+			text.embedFonts = true;
 			text.width = 300;
 			text.text = "Score 0";
 			addChild(text);
+			
 		}
 
+		private function drawHUD():void {
+			text.text = "Score " + GameManager.score.toString();
+		}
+		public function drawMenu():void {
+			space_bg = new Assets.space_bg();
+			addChild(space_bg);
+			
+			//Title
+			textFormat.font = "audiowide";
+			text.x = Misc.stageWidth/4 - 40;
+			text.y = Misc.stageHeight / 4;
+			textFormat.size = 50;
+			text.defaultTextFormat = textFormat;
+			text.textColor = 0xFFFFFF;
+			text.embedFonts = true;
+			text.width = 600;
+			text.text = "SpaceShip Battle";
+			addChild(text);
+			
+			// Space to play text
+			text2.x = Misc.stageWidth / 3;
+			text2.y = Misc.stageHeight / 2 + 100;
+			textFormat.size = 20;
+			text2.defaultTextFormat = textFormat;
+			text2.textColor = 0xFFFFFF;
+			text2.embedFonts = true;
+			text2.width = 600;
+			text2.text = "Press SPACE to play";
+			addChild(text2);
+		}
+		
+		public function drawScoreMenu() {
+			space_bg = new Assets.space_bg();
+			addChild(space_bg);
+			
+			//Game Over
+			textFormat.font = "audiowide";
+			text.x = Misc.stageWidth/4 + 40;
+			text.y = Misc.stageHeight / 4;
+			textFormat.size = 50;
+			text.defaultTextFormat = textFormat;
+			text.textColor = 0xFFFFFF;
+			text.embedFonts = true;
+			text.width = 600;
+			text.text = "Game Over";
+			addChild(text);
+			
+			// Score
+			text2.x = Misc.stageWidth / 3 + 50;
+			text2.y = Misc.stageHeight / 2;
+			textFormat.size = 20;
+			text2.defaultTextFormat = textFormat;
+			text2.textColor = 0xFFFFFF;
+			text2.embedFonts = true;
+			text2.width = 600;
+			text2.text = "Score " + GameManager.score;
+			addChild(text2);
+			
+			// Press to play again
+			text3.x = Misc.stageWidth / 3 - 40;
+			text3.y = Misc.stageHeight / 2 + 100;
+			textFormat.size = 20;
+			text3.defaultTextFormat = textFormat;
+			text3.textColor = 0xFFFFFF;
+			text3.embedFonts = true;
+			text3.width = 600;
+			text3.text = "Press SPACE to play again";
+			addChild(text3);
+		}
 		
 		private function drawCursor(cursor_type:String):void{
 			if (cursor_type == "game"){
@@ -87,6 +159,13 @@ package {
 		}
 		
 		private function drawShip():void {
+			//Player ship hit -> enemy ship
+			for (var j:Number = 0; j < enemy_ships.length; j++) {  
+				if (space_ship.hitTestObject(enemy_ships[j])) {
+					GameManager.game_lost = true;
+					GameManager.setCurrentScene = "score";
+				}
+			}
 			space_ship.x = GameManager.ship_pos_x;
 			space_ship.y = GameManager.ship_pos_y;
 			
@@ -143,7 +222,7 @@ package {
 			b.y = GameManager.ship_pos_y;
 			b.graphics.clear();
 			b.graphics.beginFill(0x00FF00);
-			b.graphics.drawCircle(0, 0, 5);
+			b.graphics.drawCircle(0, 0, 4);
 			addEventListener(Event.ENTER_FRAME, moveBullet);
 			bullets.push(b);
 		}
@@ -153,7 +232,8 @@ package {
 			for (var i:Number = 0; i < bullets.length; i++) {
 				if (bullets[i].y > 0) {
 					
-					for (var j:Number = 0; j < enemy_ships.length; j++) {     
+					for (var j:Number = 0; j < enemy_ships.length; j++) {  
+						//Bullets hit -> enemy ship
 						if (bullets[i].hitTestObject(enemy_ships[j])) {
 							//Bullet collission with enemy ship
 							explosion(bullets[i].x, bullets[i].y);
@@ -166,9 +246,10 @@ package {
 							GameManager.score += 5;
 							
 						}else {
-							bullets[i].y -= 10;
+							bullets[i].y -= 30;
 							addChild(bullets[i]);
 						}
+						
 					}
 					
 					
@@ -183,16 +264,19 @@ package {
 
 		
 		private function generateEnemyShip(event:TimerEvent):void {
-			trace("Generating enemy");
-			var enemy_ship:Bitmap;
-			var ranX:uint = uint(Math.random() * Misc.stageWidth);
-			enemy_ship = new Assets.enemy_ship1();
-			enemy_ship.y =  -100;
-			enemy_ship.x = ranX;
-			enemy_ship.rotation = 180;
-			addEventListener(Event.ENTER_FRAME, moveShips);
-			enemy_ships.push(enemy_ship);
-			addChild(enemy_ship);
+			if (GameManager.game_lost == false) {
+				trace("Generating enemy");
+				var enemy_ship:Bitmap;
+				var ranX:uint = uint(Math.random() * Misc.stageWidth);
+				enemy_ship = new Assets.enemy_ship1();
+				enemy_ship.y =  -100;
+				enemy_ship.x = ranX;
+				enemy_ship.rotation = 180;
+				addEventListener(Event.ENTER_FRAME, moveShips);
+				enemy_ships.push(enemy_ship);
+				addChild(enemy_ship);
+			}
+			
 		}
 		
 		private function moveShips(e:Event):void {
@@ -213,49 +297,49 @@ package {
 		
 		
 		// explosion function
-function explosion(x1:Number, y1:Number):void{
-	var particle_qty:Number = Math.random() * (PARTICLE_MULT/2) + (PARTICLE_MULT/2);
-	for(var i:int=0; i<particle_qty; i++){
-		var pSize:Number = Math.random() * (PARTICLE_MAX_SIZE-1) + 1;
-		var pAlpha:Number = Math.random();
+		function explosion(x1:Number, y1:Number):void{
+			var particle_qty:Number = Math.random() * (PARTICLE_MULT/2) + (PARTICLE_MULT/2);
+			for(var i:int=0; i<particle_qty; i++){
+				var pSize:Number = Math.random() * (PARTICLE_MAX_SIZE-1) + 1;
+				var pAlpha:Number = Math.random();
+		 
+				// draw the particle
+				var p:Sprite = new Sprite();
+				p.graphics.beginFill(0x00FF00);
+				p.graphics.drawCircle(0,0,pSize);
+		 
+				// create a movieclip so we can add properties to it
+				var particle:MovieClip = new MovieClip();
+				particle.addChild(p);
+				particle.x = x1;
+				particle.y = y1;
+				particle.alpha = pAlpha;
+		 
+				// choose a direction and speed to send the particle
+				var pFast:int = Math.round(Math.random() * 0.75);
+				particle.pathX = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
+					pFast * (Math.random() * 10 - 5);
+				particle.pathY = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
+					pFast * (Math.random() * 10 - 5);
+		 
+				// this event gets triggered every frame
+				particle.addEventListener(Event.ENTER_FRAME, particlePath);
+				addChild(particle);
+			}
+		}
  
-		// draw the particle
-		var p:Sprite = new Sprite();
-		p.graphics.beginFill(0xFF0000);
-		p.graphics.drawCircle(0,0,pSize);
- 
-		// create a movieclip so we can add properties to it
-		var particle:MovieClip = new MovieClip();
-		particle.addChild(p);
-		particle.x = x1;
-		particle.y = y1;
-		particle.alpha = pAlpha;
- 
-		// choose a direction and speed to send the particle
-		var pFast:int = Math.round(Math.random() * 0.75);
-		particle.pathX = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
-			pFast * (Math.random() * 10 - 5);
-		particle.pathY = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
-			pFast * (Math.random() * 10 - 5);
- 
-		// this event gets triggered every frame
-		particle.addEventListener(Event.ENTER_FRAME, particlePath);
-		addChild(particle);
-	}
-}
- 
-// moves the particle
-function particlePath(e:Event):void{
-	e.target.x += e.target.pathX;
-	e.target.y += e.target.pathY;
-	e.target.alpha -= 0.005;
- 
-	// removes the particle from stage when its alpha reaches zero
-	if(e.target.alpha <= 0){
-		e.target.removeEventListener('enterFrame', particlePath);
-		e.target.parent.removeChild(e.target);
-	}
-}
+		// moves the particle
+		function particlePath(e:Event):void{
+			e.target.x += e.target.pathX;
+			e.target.y += e.target.pathY;
+			e.target.alpha -= 0.005;
+		 
+			// removes the particle from stage when its alpha reaches zero
+			if(e.target.alpha <= 0){
+				e.target.removeEventListener('enterFrame', particlePath);
+				e.target.parent.removeChild(e.target);
+			}
+		}
 		
 		
 		

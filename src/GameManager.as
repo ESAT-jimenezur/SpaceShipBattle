@@ -18,6 +18,7 @@ package
 		public static var ship_pos_x:Number = 300;
 		public static var ship_pos_y:Number = 400;
 		public static var score:Number = 0;
+		public static var game_lost:Boolean = false;
 		
 		
 		//Debug
@@ -43,7 +44,7 @@ package
 		public static function init():GameManager {
 			//Set Background Color
 			Misc.changeStageColor(000000); // -> Black
-			_instance._current_scene = "game";
+			_instance._current_scene = "main_menu";
 			return _instance;
 		}
 		
@@ -51,7 +52,10 @@ package
 		public static function get getCurrentScene():String {
 			return _instance._current_scene;
 		}
-		
+		// GameManager.setCurrentScene
+		public static function set setCurrentScene(scene:String):void {
+			_instance._current_scene = scene;
+		}
 	}
 
 }
