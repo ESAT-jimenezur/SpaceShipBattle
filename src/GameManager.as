@@ -17,6 +17,8 @@ package
 		public static var mouse_pos_y:Number = 0;
 		public static var ship_pos_x:Number = 300;
 		public static var ship_pos_y:Number = 400;
+		public static var score:Number = 0;
+		
 		
 		//Debug
 		private static var bg:Sprite;
