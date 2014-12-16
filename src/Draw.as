@@ -36,17 +36,15 @@ package {
 		private var text2:TextField = new TextField();
 		private var text3:TextField = new TextField();
 		private var textFormat:TextFormat = new TextFormat();
+		private var total_enemy_skins:uint = 4;
 		private var particle_mult = 200;
 		private var particle_max_size = 2;
 		private var particle_speed = 10;
 		
 		public function drawGame():void {
-			
 			drawCursor(GameManager.getCurrentScene);
-			
 			drawStars();
 			drawShip();
-			
 			drawHUD();
 		}
 		
@@ -273,7 +271,23 @@ package {
 				trace("Generating enemy");
 				var enemy_ship:Bitmap;
 				var ranX:uint = uint(Math.random() * Misc.stageWidth);
-				enemy_ship = new Assets.enemy_ship1();
+				var enemy_type:uint = uint(Math.random() * total_enemy_skins + 1); //Increment this var when adding new enemy ship assets
+				switch(enemy_type) {
+				case 1:
+						enemy_ship = new Assets.enemy_ship1();
+					break;
+				case 2:
+						enemy_ship = new Assets.enemy_ship2();
+					break;
+				case 3:
+						enemy_ship = new Assets.enemy_ship3();
+					break;
+				case 4:
+						enemy_ship = new Assets.enemy_ship4();
+					break;	
+				}
+				
+				
 				enemy_ship.y =  -100;
 				enemy_ship.x = ranX;
 				enemy_ship.rotation = 180;
