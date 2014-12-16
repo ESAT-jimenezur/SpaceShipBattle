@@ -13,6 +13,7 @@ package {
 	import flash.text.TextFormat;
 	import flash.ui.Mouse;
 	import flash.utils.Timer;
+
 	
 	
 	/**
@@ -35,11 +36,9 @@ package {
 		private var text2:TextField = new TextField();
 		private var text3:TextField = new TextField();
 		private var textFormat:TextFormat = new TextFormat();
-		
-		// settings
-		const PARTICLE_MULT = 200;
-		const PARTICLE_MAX_SIZE = 2;
-		const PARTICLE_SPEED = 10;
+		private var particle_mult = 200;
+		private var particle_max_size = 2;
+		private var particle_speed = 10;
 		
 		public function drawGame():void {
 			
@@ -54,6 +53,13 @@ package {
 		
 		
 		public function init():void {
+			//Delete arrays (if there is something inside)
+			bullets.length = 0;
+			enemy_ships.length = 0;
+			small_stars.length = 0;
+			medium_stars.length = 0;
+			
+			
 			generateStars();
 			drawHUD();
 			
@@ -112,7 +118,7 @@ package {
 			addChild(text2);
 		}
 		
-		public function drawScoreMenu() {
+		public function drawScoreMenu():void {
 			space_bg = new Assets.space_bg();
 			addChild(space_bg);
 			
@@ -212,7 +218,6 @@ package {
 			
 			for (var a:Number = 0; a < medium_stars.length; a++) {
 				addChild(medium_stars[a]);
-				
 			}
 		}
 		
@@ -234,7 +239,7 @@ package {
 					
 					for (var j:Number = 0; j < enemy_ships.length; j++) {  
 						//Bullets hit -> enemy ship
-						if (bullets[i].hitTestObject(enemy_ships[j])) {
+					if (bullets[i].hitTestObject(enemy_ships[j])) {
 							//Bullet collission with enemy ship
 							explosion(bullets[i].x, bullets[i].y);
 							removeChild(bullets[i]);
@@ -298,9 +303,9 @@ package {
 		
 		// explosion function
 		function explosion(x1:Number, y1:Number):void{
-			var particle_qty:Number = Math.random() * (PARTICLE_MULT/2) + (PARTICLE_MULT/2);
+			var particle_qty:Number = Math.random() * (particle_mult/2) + (particle_mult/2);
 			for(var i:int=0; i<particle_qty; i++){
-				var pSize:Number = Math.random() * (PARTICLE_MAX_SIZE-1) + 1;
+				var pSize:Number = Math.random() * (particle_max_size-1) + 1;
 				var pAlpha:Number = Math.random();
 		 
 				// draw the particle
@@ -317,9 +322,9 @@ package {
 		 
 				// choose a direction and speed to send the particle
 				var pFast:int = Math.round(Math.random() * 0.75);
-				particle.pathX = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
+				particle.pathX = (Math.random() * particle_speed - particle_speed/2) + 
 					pFast * (Math.random() * 10 - 5);
-				particle.pathY = (Math.random() * PARTICLE_SPEED - PARTICLE_SPEED/2) + 
+				particle.pathY = (Math.random() * particle_speed - particle_speed/2) + 
 					pFast * (Math.random() * 10 - 5);
 		 
 				// this event gets triggered every frame

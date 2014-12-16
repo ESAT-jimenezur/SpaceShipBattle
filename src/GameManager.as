@@ -15,7 +15,7 @@ package
 		private var _current_scene:String; // main_menu - game
 		public static var mouse_pos_x:Number = 0;
 		public static var mouse_pos_y:Number = 0;
-		public static var ship_pos_x:Number = 300;
+		public static var ship_pos_x:Number = 350;
 		public static var ship_pos_y:Number = 400;
 		public static var score:Number = 0;
 		public static var game_lost:Boolean = false;

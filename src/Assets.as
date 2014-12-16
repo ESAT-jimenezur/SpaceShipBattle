@@ -14,15 +14,16 @@ package
 		[Embed(source = "../assets/ship_pack_parts/ss_ship9.png")]public static const enemy_ship1:Class;
 		
 		//Fonts
-		[Embed(source = "../assets/fonts/Audiowide-Regular.ttf",
+		[Embed(source="../assets/fonts/Audiowide-Regular.ttf",
 			fontName = "audiowide", 
 			mimeType = "application/x-font", 
 			fontWeight="normal", 
 			fontStyle="normal", 
 			unicodeRange="U+0020-U+007E", 
-			advancedAntiAliasing="true"
+			advancedAntiAliasing = "true",
+			embedAsCFF="false"
 		)]
-        private var myEmbeddedFont:Class;
+        public static var audiowide_font:Class;
 	}
 
 }

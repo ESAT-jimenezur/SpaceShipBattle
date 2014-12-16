@@ -37,9 +37,7 @@ package {
 			Misc.update = update;
 			Misc.draw = draw;
 			
-			addChild(draw);
-			
-			
+			addChild(draw);		
 		}
 		
 		private function onKeyBoardKeyDown(e:KeyboardEvent):void {
@@ -54,6 +52,8 @@ package {
 				if (e.keyCode == 32) {
 					GameManager.setCurrentScene = "game";
 					GameManager.score = 0;
+					GameManager.ship_pos_x = 350;
+					GameManager.ship_pos_y = 400;
 					GameManager.game_lost = false;
 					update.init();
 					update.addListeners();
